@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DarkToffee Product List UI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+
+    <style>
+        /* --------------------
+           GENERAL STYLES
+        -------------------- */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+
+        /* --------------------
+           HEADER
+        -------------------- */
+        header {
+            background-color: #24231D;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 5px;
+        }
+
+        .search-bar input {
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: none;
+        }
+
+        /* --------------------
+           ABOUT SECTION
+        -------------------- */
+        .section {
+            width: 100%;
+            min-height: 70vh;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            display: flex;
+            gap: 5%;
+            flex-wrap: wrap;
+            padding: 50px 0;
+        }
+
+        .content-section {
+            flex: 1 1 55%;
+        }
+
+        .image-section {
+            flex: 1 1 40%;
+        }
+
+        .image-section img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .content-section .title {
+            text-transform: uppercase;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .content-section .content h3 {
+            margin-top: 20px;
+            color: #000;
+        }
+
+        .button a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #ff9800;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .button a:hover {
+            background: #e68900;
+        }
+
+        /* --------------------
+           GALLERY
+        -------------------- */
+        .gallery-section {
+            background-color: #2D1F1F;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .gallery-section h2 {
+            margin-bottom: 30px;
+            font-size: 2em;
+            color: #fff;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            width: 80%;
+            margin: auto;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 1024px) {
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --------------------
+           PRODUCTS
+        -------------------- */
+        #products {
+            background-color: #EAF1F1;
+            padding: 40px 20px;
+        }
+
+        .products-container {
+            display: flex;
+        }
+
+        #products h2 {
+            font-size: 36px;
+            font-weight: 600;
+            color: #333; 
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .main-content {
+            width: 70%;
+            padding: 20px;
+        }
+
+        .side-space {
+            width: 30%;
+            background-color: #f9f9f9;
+            border-left: 1px solid #ddd;
+            padding: 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .product-card h3 {
+            margin: 10px 0 5px;
+            font-size: 18px;
+        }
+
+        .product-card p {
+            margin: 4px 0;
+        }
+
+        .product-card button {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .product-card button:hover {
+            background-color: #218838;
+        }
+
+        .cart-count {
+            background-color: red;
+            color: white;
+            padding: 3px 7px;
+            border-radius: 50%;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+
+        #cartItems {
+            list-style: none;
+            padding: 0;
+        }
+
+        #cartItems li {
+            border-bottom: 1px solid #ddd;
+            padding: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .remove-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* --------------------
+           CONTACT
+        -------------------- */
+        #contact {
+            background: #2C1F1E;
+            padding: 50px 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #contact .content {
+            max-width: 800px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        #contact .content h2 {
+            font-size: 36px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        #contact .content p {
+            font-weight: 300;
+            color: #fff;
+        }
+
+        .contact-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contactInfo {
+            flex: 1;
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contactInfo .box {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .contactInfo .icon {
+            min-width: 50px;
+            height: 50px;
+            background: #ff9800;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            font-size: 20px;
+        }
+
+        .contactInfo .text {
+            margin-left: 15px;
+            color: #333;
+        }
+
+        .contactInfo .text h3 {
+            font-weight: 600;
+            color: #ff9800;
+        }
+
+        .contactForm {
+            flex: 1;
+            min-width: 280px;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .contactForm h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .contactForm .inputBox {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .contactForm .inputBox input,
+        .contactForm .inputBox textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            outline: none;
+            resize: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .contactForm .inputBox textarea {
+            min-height: 100px;
+        }
+
+        .contactForm .inputBox span {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: #999;
+            transition: 0.3s;
+            pointer-events: none;
+        }
+
+        .contactForm .inputBox input:focus + span,
+        .contactForm .inputBox input:valid + span,
+        .contactForm .inputBox textarea:focus + span,
+        .contactForm .inputBox textarea:valid + span {
+            top: -5px;
+            font-size: 12px;
+            color: #ff9800;
+        }
+
+        .contactForm input[type="submit"] {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .contactForm input[type="submit"]:hover {
+            background: #e68900;
+        }
+
+        /* --------------------
+           FOOTER
+        -------------------- */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+
+        footer a {
+            color: #ff9800;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header>
+        <h1>Dark Toffee</h1>
+        <nav>
+            <a href="#about">About Us</a>
+            <a href="#gallery">Our Gallery</a>
+            <a href="#products">Products</a>
+            <a href="#contact">Contact Us</a>
+        </nav>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search product..." />
+        </div>
+    </header>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="content-section">
+                <div class="title">
+                    <h1>About Us</h1>
+                </div>
+                <div class="content">
+                    <h3>Where Coffee Feels Like Home</h3>
+                    <p>At DarkToffee, we serve more than just coffee — we create experiences. Our handcrafted drinks and gourmet bites are thoughtfully made to bring comfort, flavor, and satisfaction. Blending local charm with global café culture, we aim to be your go-to spot for moments worth savoring.</p>
+                    <div class="button">
+                        <a href="#products">Explore Our Menu</a>
+                    </div>
+                </div>
+            </div>
+            <div class="image-section">
+                <img src="img/Dark_Toffee.jpg" alt="Dark Toffee Background" />
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="gallery-section">
+        <h2>Our Gallery</h2>
+        <div class="gallery">
+            <img src="img/gallery1.jpg" alt="DarkToffee 1" />
+            <img src="img/gallery2.png" alt="DarkToffee 2" />
+            <img src="img/gallery3.png" alt="DarkToffee 3" />
+            <img src="img/gallery4.jpg" alt="DarkToffee 4" />
+        </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section id="products">
+        <h2>Menu</h2>
+        <div class="products-container">
+            <!-- Product List -->
+            <div class="main-content">
+                <p>Cart Items: <span id="cartCount" class="cart-count">0</span></p>
+                <div class="product-grid" id="productGrid">
+                    <div class="product-card" data-name="Ham & Cheese Sandwich">
+                        <img src="img/Ham_and_Cheese.jpg" alt="Sandwich" />
+                        <h3>Ham & Cheese Sandwich</h3>
+                        <p>₱120</p>
+                        <p>Quantity: 1pc</p>
+                        <button onclick="addToCart('Ham & Cheese Sandwich', 120)">Add to Cart</button>
+                    </div>
+                    <div class="product-card" data-name="Amber Brew Latte">
+                        <img src="img/Amber_Brew_Latte.jpg" alt="Latte" />
+                        <h3>Amber Brew Latte</h3>
+                        <p>₱140</p>
+                        <p>Quantity: 1 cup</p>
+                        <button onclick="addToCart('Amber Brew Latte', 140)">Add to Cart</button>
+                    </div>
+                    <div class="product-card" data-name="Ice Macha Elan">
+                        <img src="img/Ice_Macha_Elan.jpg" alt="Ice Macha" />
+                        <h3>Ice Macha Elan</h3>
+                        <p>₱150</p>
+                        <p>Quantity: 400ml</p>
+                        <button onclick="addToCart('Ice Macha Elan', 150)">Add to Cart</button>
+                    </div>
+                    <div class="product-card" data-name="Brioche Bun">
+                        <img src="img/Brioche_Bun.jpg" alt="Brioche Bun" />
+                        <h3>Brioche Bun</h3>
+                        <p>₱50</p>
+                        <p>Quantity: 1pc</p>
+                        <button onclick="addToCart('Brioche Bun', 50)">Add to Cart</button>
+                    </div>
+                    <div class="product-card" data-name="Croissant">
+                        <img src="img/Croissant.jpg" alt="Croissant" />
+                        <h3>Croissant</h3>
+                        <p>₱30</p>
+                        <p>Quantity: 1pc</p>
+                        <button onclick="addToCart('Croissant', 30)">Add to Cart</button>
+                    </div>
+                    <div class="product-card" data-name="SourDough">
+                        <img src="img/SourDough.jpg" alt="SourDough" />
+                        <h3>SourDough</h3>
+                        <p>₱45</p>
+                        <p>Quantity: 1pc</p>
+                        <button onclick="addToCart('SourDough', 45)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cart -->
+            <div class="side-space">
+                <h2>Your Cart</h2>
+                <ul id="cartItems"></ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="content">
+            <h2>Contact Us</h2>
+            <p>We’d love to hear from you! Reach out with any questions, feedback, or coffee cravings.</p>
+        </div>
+
+        <div class="contact-container">
+            <div class="contactInfo">
+                <div class="box">
+                    <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="text">
+                        <h3>Address</h3>
+                        <p>123 Brew Street, Sitio Kape,<br>
+                           Tagaytay Highlands, PH 4120</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icon"><i class="fas fa-phone"></i></div>
+                    <div class="text">
+                        <h3>Phone</h3>
+                        <p>(+63) 917-555-TOFF (8633)</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icon"><i class="fas fa-envelope"></i></div>
+                    <div class="text">
+                        <h3>Email</h3>
+                        <p>contact@darktoffee.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contactForm">
+                <form>
+                    <h2>Send Message</h2>
+                    <div class="inputBox">
+                        <input type="text" name="name" required />
+                        <span>Full Name</span>
+                    </div>
+                    <div class="inputBox">
+                        <input type="email" name="email" required />
+                        <span>Email</span>
+                    </div>
+                    <div class="inputBox">
+                        <textarea name="message" required></textarea>
+                        <span>Type your Message</span>
+                    </div>
+                    <input type="submit" value="Send" />
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2025 Dark Toffee | Designed for Individual Assignment</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+    <!-- SCRIPT -->
+    <script>
+        let cart = [];
+
+        function addToCart(productName, price) {
+            cart.push({ name: productName, price: price });
+            updateCartDisplay();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const cartList = document.getElementById('cartItems');
+            cartList.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `${item.name} - ₱${item.price} 
+                    <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>`;
+                cartList.appendChild(li);
+            });
+
+            document.getElementById('cartCount').innerText = cart.length;
+        }
+
+        // Live search
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const searchValue = this.value.toLowerCase();
+            const products = document.querySelectorAll('.product-card');
+
+            products.forEach(product => {
+                const productName = product.getAttribute('data-name').toLowerCase();
+                product.style.display = productName.includes(searchValue) ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
